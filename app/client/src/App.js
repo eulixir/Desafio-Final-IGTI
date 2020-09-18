@@ -22,7 +22,7 @@ export default function App() {
       <h1>Desafio Final do bootcamp</h1>
 
       {transactions.map((transaction) => {
-        return <p key={transaction}>{transaction}</p>;
+        return <p key={transaction._id}>{transaction.description}</p>;
       })}
     </div>
   );
