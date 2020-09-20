@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import './index.css';
+import ListScreen from './components/listSreen';
+import MaintenaceSreen from './components/maintenaceSreen';
 
 const api = axios.create({ baseURL: 'api' });
 const RESOURCE = '/transaction';
@@ -51,7 +53,7 @@ export default function App() {
   const [transactions, setTransactions] = React.useState([]);
   const [filteredTransactions, setFilteredTransactions] = React.useState([]);
   const [currentPeriod, setCurrentPeriod] = React.useState(PERIODS[0]);
-  const [currentScreen, setCurrentScreen] = React.useState(LIST_SCREEN);
+  const [currentScreen, setCurrentScreen] = React.useState(MAINTENANCE_SCREEN);
   const [filteredText, setFilteredText] = React.useState('');
 
   React.useEffect(() => {
@@ -104,58 +106,17 @@ export default function App() {
         Desafio Final<br></br> do Bootcamp
       </h1>
       {currentScreen === LIST_SCREEN ? (
-        <>
-          <select
-            value={currentPeriod}
-            onChange={handlePeriodChange}
-            className="browser-default"
-          >
-            {PERIODS.map((period) => (
-              <option key={period}>{period}</option>
-            ))}
-          </select>
-
-          <input
-            className="inputTypeText"
-            type="text"
-            placeholder="Filtro..."
-            value={filteredText}
-            onChange={handleFilterChange}
-          ></input>
-
-          {filteredTransactions.map((transaction) => {
-            const EARNING_COLOR = '#6ab04c';
-            const EXPENSE_COLOR = '#fa080877';
-            const currentColor =
-              transaction.type === '+' ? EARNING_COLOR : EXPENSE_COLOR;
-            return (
-              <div
-                key={transaction._id}
-                className="transactionList"
-                style={{ backgroundColor: currentColor }}
-              >
-                <button className="defaultButton editButton">Editar</button>
-                <button
-                  className="defaultButton deleteButton"
-                  onClick={handleDeleteTransaction}
-                  id={transaction._id}
-                >
-                  Apagar
-                </button>
-                <span className="list">
-                  {transaction.yearMonthDay}{' '}
-                  <strong>
-                    {transaction.category}
-                    {''}{' '}
-                  </strong>
-                  {transaction.description} - {transaction.value}
-                </span>
-              </div>
-            );
-          })}
-        </>
+        <ListScreen
+          transactions={filteredTransactions}
+          periods={PERIODS}
+          currentPeriod={currentPeriod}
+          filteredText={filteredText}
+          onDeleteTransaction={handleDeleteTransaction}
+          onFilterChange={handleFilterChange}
+          onPeriodChange={handlePeriodChange}
+        ></ListScreen>
       ) : (
-        <p>Tela de manutenção</p>
+        <MaintenaceSreen />
       )}
     </div>
   );
