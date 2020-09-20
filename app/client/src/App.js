@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './index.css';
 
 const api = axios.create({ baseURL: 'api' });
 
@@ -49,7 +50,7 @@ export default function App() {
   const [transactions, setTransactions] = React.useState([]);
   const [filteredTransactions, setFilteredTransactions] = React.useState([]);
   const [currentPeriod, setCurrentPeriod] = React.useState(PERIODS[0]);
-  const [currentScreen, setCurrentScreen] = React.useState(MAINTENANCE_SCREEN);
+  const [currentScreen, setCurrentScreen] = React.useState(LIST_SCREEN);
 
   React.useEffect(() => {
     const fetchTransactions = async () => {
@@ -69,8 +70,10 @@ export default function App() {
 
   return (
     <div className="container">
-      <h1>Desafio Final do bootcamp</h1>
-      {setCurrentScreen === LIST_SCREEN ? (
+      <h1 className="title">
+        Desafio Final<br></br> do Bootcamp
+      </h1>
+      {currentScreen === LIST_SCREEN ? (
         <>
           <select
             value={currentPeriod}
@@ -83,7 +86,28 @@ export default function App() {
           </select>
 
           {filteredTransactions.map((transaction) => {
-            return <p key={transaction._id}>{transaction.description}</p>;
+            const EARNING_COLOR = '#6ab04c';
+            const EXPENSE_COLOR = '#fa080877';
+            const currentColor =
+              transaction.type === '+' ? EARNING_COLOR : EXPENSE_COLOR;
+            return (
+              <div
+                key={transaction._id}
+                className="transactionList"
+                style={{ backgroundColor: currentColor }}
+              >
+                <button className="defaultButton editButton">Editar</button>
+                <button className="defaultButton deleteButton">Apagar</button>
+                <span className="list">
+                  {transaction.yearMonthDay}{' '}
+                  <strong>
+                    {transaction.category}
+                    {''}{' '}
+                  </strong>
+                  {transaction.description} - {transaction.value}
+                </span>
+              </div>
+            );
           })}
         </>
       ) : (
