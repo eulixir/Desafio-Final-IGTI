@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import './index.css';
 
 const api = axios.create({ baseURL: 'api' });
+const RESOURCE = '/transaction';
 
 const PERIODS = [
   '2019-01',
@@ -51,21 +52,50 @@ export default function App() {
   const [filteredTransactions, setFilteredTransactions] = React.useState([]);
   const [currentPeriod, setCurrentPeriod] = React.useState(PERIODS[0]);
   const [currentScreen, setCurrentScreen] = React.useState(LIST_SCREEN);
+  const [filteredText, setFilteredText] = React.useState('');
 
   React.useEffect(() => {
     const fetchTransactions = async () => {
       const { data } = await api.get(`/transaction?period=${currentPeriod}`);
 
       setTransactions(data.transactions);
-      setFilteredTransactions(data.transactions);
     };
 
     fetchTransactions();
   }, [currentPeriod]);
 
+  React.useEffect(() => {
+    let newFilteredTransactions = [...transactions];
+
+    if (filteredText.trim() !== '') {
+      newFilteredTransactions = newFilteredTransactions.filter(
+        (transaction) => {
+          return transaction.description.toLowerCase().includes(filteredText);
+        }
+      );
+    }
+    setFilteredTransactions(newFilteredTransactions);
+  }, [transactions, filteredText]);
+
   const handlePeriodChange = (event) => {
     const newPeriod = event.target.value;
     setCurrentPeriod(newPeriod);
+  };
+
+  const handleFilterChange = (event) => {
+    const text = event.target.value.trim();
+    setFilteredText(text.toLowerCase());
+  };
+
+  const handleDeleteTransaction = async (event) => {
+    const id = event.target.id;
+
+    await api.delete(`${RESOURCE}/${id}`);
+
+    const newTrasaction = transactions.filter((transaction) => {
+      return transaction._id !== id;
+    });
+    setTransactions(newTrasaction);
   };
 
   return (
@@ -85,6 +115,14 @@ export default function App() {
             ))}
           </select>
 
+          <input
+            className="inputTypeText"
+            type="text"
+            placeholder="Filtro..."
+            value={filteredText}
+            onChange={handleFilterChange}
+          ></input>
+
           {filteredTransactions.map((transaction) => {
             const EARNING_COLOR = '#6ab04c';
             const EXPENSE_COLOR = '#fa080877';
@@ -97,7 +135,13 @@ export default function App() {
                 style={{ backgroundColor: currentColor }}
               >
                 <button className="defaultButton editButton">Editar</button>
-                <button className="defaultButton deleteButton">Apagar</button>
+                <button
+                  className="defaultButton deleteButton"
+                  onClick={handleDeleteTransaction}
+                  id={transaction._id}
+                >
+                  Apagar
+                </button>
                 <span className="list">
                   {transaction.yearMonthDay}{' '}
                   <strong>

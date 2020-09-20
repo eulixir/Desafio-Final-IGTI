@@ -7,14 +7,15 @@
   cursor: pointer;
   font: bold sans-seriff;
   transition: 0.2s;
+  margin-bottom: 7px;
 }
 .transactionList:hover {
-  box-shadow: 4px 4px rgba(63, 63, 63, 0.432);
+  box-shadow: 4px 4px rgba(170, 170, 170, 0.432);
   transform: translateY(-3px);
 }
 
 body {
-  background: linear-gradient(white, rgb(212, 212, 212));
+  background-color: rgb(241, 241, 241);
 }
 
 .title {
@@ -49,5 +50,17 @@ body {
 }
 
 .defaultButton:hover {
-  box-shadow: 4px 4px rgba(63, 63, 63, 0.432);
+  filter: brightness(90%);
+}
+
+.editButton:focus {
+  background-color: rgb(247, 197, 35);
+}
+
+.deleteButton:focus {
+  background-color: rgb(247, 42, 35);
+}
+
+.inputTypeText {
+  font-family: JetBrains Mono;
 }
