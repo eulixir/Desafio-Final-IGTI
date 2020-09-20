@@ -4,10 +4,11 @@ export default function ListScreen({
   transactions,
   periods,
   filteredText,
+  currentPeriod,
   onDeleteTransaction,
+  onEditTransaction,
   onFilterChange,
   onPeriodChange,
-  currentPeriod,
 }) {
   return (
     <>
@@ -40,7 +41,12 @@ export default function ListScreen({
             className="transactionList"
             style={{ backgroundColor: currentColor }}
           >
-            <button className="defaultButton editButton">Editar</button>
+            <button
+              className="defaultButton editButton"
+              onClick={onEditTransaction}
+            >
+              Editar
+            </button>
             <button
               className="defaultButton deleteButton"
               onClick={onDeleteTransaction}

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import './index.css';
 import ListScreen from './components/listSreen';
-import MaintenaceSreen from './components/maintenaceSreen';
+import MaintenanceSreen from './components/maintenanceSreen';
 
 const api = axios.create({ baseURL: 'api' });
 const RESOURCE = '/transaction';
@@ -53,8 +53,9 @@ export default function App() {
   const [transactions, setTransactions] = React.useState([]);
   const [filteredTransactions, setFilteredTransactions] = React.useState([]);
   const [currentPeriod, setCurrentPeriod] = React.useState(PERIODS[0]);
-  const [currentScreen, setCurrentScreen] = React.useState(MAINTENANCE_SCREEN);
+  const [currentScreen, setCurrentScreen] = React.useState(LIST_SCREEN);
   const [filteredText, setFilteredText] = React.useState('');
+  const [selectedTransaction, setSelectedTransaction] = React.useState(null);
 
   React.useEffect(() => {
     const fetchTransactions = async () => {
@@ -79,6 +80,13 @@ export default function App() {
     setFilteredTransactions(newFilteredTransactions);
   }, [transactions, filteredText]);
 
+  React.useEffect(() => {
+    const newScreen =
+      selectedTransaction !== null ? MAINTENANCE_SCREEN : LIST_SCREEN;
+
+    setCurrentScreen(newScreen);
+  }, [selectedTransaction]);
+
   const handlePeriodChange = (event) => {
     const newPeriod = event.target.value;
     setCurrentPeriod(newPeriod);
@@ -100,6 +108,17 @@ export default function App() {
     setTransactions(newTrasaction);
   };
 
+  const handleEditTransaction = async (event) => {
+    const id = event.target.id;
+
+    const newSelectedTransaction = filteredTransactions.find((transaction) => {
+      return transaction._id !== id;
+    });
+
+    console.log(newSelectedTransaction);
+    setSelectedTransaction(newSelectedTransaction);
+  };
+
   return (
     <div className="container">
       <h1 className="title">
@@ -114,9 +133,10 @@ export default function App() {
           onDeleteTransaction={handleDeleteTransaction}
           onFilterChange={handleFilterChange}
           onPeriodChange={handlePeriodChange}
+          onEditTransaction={handleEditTransaction}
         ></ListScreen>
       ) : (
-        <MaintenaceSreen />
+        <MaintenanceSreen />
       )}
     </div>
   );
