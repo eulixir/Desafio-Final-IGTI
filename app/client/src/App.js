@@ -136,7 +136,7 @@ export default function App() {
           onEditTransaction={handleEditTransaction}
         ></ListScreen>
       ) : (
-        <MaintenanceSreen />
+        <MaintenanceSreen transaction={selectedTransaction} />
       )}
     </div>
   );
