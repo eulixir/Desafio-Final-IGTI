@@ -6,6 +6,7 @@ export default function MaintenanceSreen({ transaction }) {
   const [category, setCategory] = React.useState('');
   const [date, setDate] = React.useState('');
   const [type, setType] = React.useState('-');
+  console.log(transaction);
 
   React.useEffect(() => {
     if (!transaction) {
@@ -36,7 +37,7 @@ export default function MaintenanceSreen({ transaction }) {
   };
 
   const handleDateChange = (event) => {
-    const newDate = event.target.value;
+    const newDate = event.target.valuetrim();
     setDate(newDate);
   };
 
@@ -47,6 +48,31 @@ export default function MaintenanceSreen({ transaction }) {
 
   return (
     <div>
+      <span>
+        <label>
+          <input
+            name="expense_earning"
+            type="radio"
+            checked={type === '-'}
+            onChange={handleTypeChange}
+            value="-"
+          />
+          <span>Despesa</span>
+        </label>
+      </span>
+      <span>
+        <label>
+          <input
+            name="expense_earning"
+            type="radio"
+            checked={type === '+'}
+            onChange={handleTypeChange}
+            value="+"
+          />
+          <span>Receita</span>
+        </label>
+      </span>
+
       <div className="input-field">
         <input
           type="text"
@@ -91,18 +117,6 @@ export default function MaintenanceSreen({ transaction }) {
           id="inputDate"
         />
         <label htmlFor="inputDate" className="active">
-          Categoria:
-        </label>
-      </div>
-
-      <div className="input-field">
-        <input
-          type="text"
-          onChange={handleTypeChange}
-          value={type}
-          id="inputType"
-        />
-        <label htmlFor="inputType" className="active">
           Categoria:
         </label>
       </div>
