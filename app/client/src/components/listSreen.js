@@ -44,6 +44,7 @@ export default function ListScreen({
             <button
               className="defaultButton editButton"
               onClick={onEditTransaction}
+              id={transaction._id}
             >
               Editar
             </button>

@@ -112,7 +112,7 @@ export default function App() {
     const id = event.target.id;
 
     const newSelectedTransaction = filteredTransactions.find((transaction) => {
-      return transaction._id !== id;
+      return transaction._id === id;
     });
 
     console.log(newSelectedTransaction);

@@ -6,7 +6,6 @@ export default function MaintenanceSreen({ transaction }) {
   const [category, setCategory] = React.useState('');
   const [date, setDate] = React.useState('');
   const [type, setType] = React.useState('-');
-  console.log(transaction);
 
   React.useEffect(() => {
     if (!transaction) {
