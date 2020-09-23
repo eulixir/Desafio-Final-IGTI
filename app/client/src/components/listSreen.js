@@ -9,6 +9,7 @@ export default function ListScreen({
   onEditTransaction,
   onFilterChange,
   onPeriodChange,
+  onNewTransaction,
 }) {
   return (
     <>
@@ -29,6 +30,14 @@ export default function ListScreen({
         value={filteredText}
         onChange={onFilterChange}
       ></input>
+      <div>
+        <button className="waves-effect waves-light btn">
+          Novo Lançamento{' '}
+          <span className="icon" onClick={onNewTransaction}>
+            +
+          </span>
+        </button>
+      </div>
 
       {transactions.map((transaction) => {
         const EARNING_COLOR = '#6ab04c';

@@ -56,7 +56,7 @@ export default function App() {
   const [currentScreen, setCurrentScreen] = React.useState(LIST_SCREEN);
   const [filteredText, setFilteredText] = React.useState('');
   const [selectedTransaction, setSelectedTransaction] = React.useState(null);
-
+  const [newTransaction, setNewTransaction] = React.useState(false);
   React.useEffect(() => {
     const fetchTransactions = async () => {
       const { data } = await api.get(`/transaction?period=${currentPeriod}`);
@@ -82,10 +82,12 @@ export default function App() {
 
   React.useEffect(() => {
     const newScreen =
-      selectedTransaction !== null ? MAINTENANCE_SCREEN : LIST_SCREEN;
+      selectedTransaction !== null || newTransaction
+        ? MAINTENANCE_SCREEN
+        : LIST_SCREEN;
 
     setCurrentScreen(newScreen);
-  }, [selectedTransaction]);
+  }, [selectedTransaction, newTransaction]);
 
   const handlePeriodChange = (event) => {
     const newPeriod = event.target.value;
@@ -95,6 +97,32 @@ export default function App() {
   const handleFilterChange = (event) => {
     const text = event.target.value.trim();
     setFilteredText(text.toLowerCase());
+  };
+
+  const handleCancelMaintenance = () => {
+    setSelectedTransaction(null);
+  };
+
+  const handleSaveMaintenance = (newTransaction) => {
+    console.log(newTransaction);
+    const { _id } = newTransaction;
+    const editTransaction = {
+      ...newTransaction,
+      year: Number(newTransaction.yearMonthDay.substring(0, 4)),
+      month: Number(newTransaction.yearMonthDay.substring(5, 7)),
+      day: Number(newTransaction.yearMonthDay.substring(8, 10)),
+    };
+    api.put(`${RESOURCE}/${_id}`, editTransaction);
+
+    const newTransactions = [...transactions];
+
+    const index = newTransactions.findIndex((transaction) => {
+      return transaction._id === editTransaction._id;
+    });
+    newTransactions[index] = editTransaction;
+
+    setTransactions(newTransactions);
+    setSelectedTransaction(null);
   };
 
   const handleDeleteTransaction = async (event) => {
@@ -115,8 +143,11 @@ export default function App() {
       return transaction._id === id;
     });
 
-    console.log(newSelectedTransaction);
     setSelectedTransaction(newSelectedTransaction);
+  };
+
+  const handleNewTransaction = async () => {
+    setNewTransaction(true);
   };
 
   return (
@@ -132,11 +163,16 @@ export default function App() {
           filteredText={filteredText}
           onDeleteTransaction={handleDeleteTransaction}
           onFilterChange={handleFilterChange}
+          onNewTransaction={handleNewTransaction}
           onPeriodChange={handlePeriodChange}
           onEditTransaction={handleEditTransaction}
         ></ListScreen>
       ) : (
-        <MaintenanceSreen transaction={selectedTransaction} />
+        <MaintenanceSreen
+          transaction={selectedTransaction}
+          onCancel={handleCancelMaintenance}
+          onSave={handleSaveMaintenance}
+        />
       )}
     </div>
   );

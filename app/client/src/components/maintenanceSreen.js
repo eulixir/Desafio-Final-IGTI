@@ -1,7 +1,7 @@
 import React from 'react';
 import '../index.css';
 
-export default function MaintenanceSreen({ transaction }) {
+export default function MaintenanceSreen({ transaction, onCancel, onSave }) {
   const [description, setDescription] = React.useState('');
   const [value, setValue] = React.useState(0);
   const [category, setCategory] = React.useState('');
@@ -44,6 +44,22 @@ export default function MaintenanceSreen({ transaction }) {
   const handleTypeChange = (event) => {
     const newType = event.target.value;
     setType(newType);
+  };
+
+  const handleCancelClick = () => {
+    onCancel();
+  };
+
+  const handleSaveClick = () => {
+    const newTransaction = {
+      _id: transaction._id,
+      description,
+      value,
+      type,
+      yearMonthDay: date,
+      category,
+    };
+    onSave(newTransaction);
   };
 
   return (
@@ -122,8 +138,13 @@ export default function MaintenanceSreen({ transaction }) {
           Data:
         </label>
       </div>
-      <buton className="waves-effect waves-light btn">Salvar</buton>
-      <button className="waves-effect waves-light btn red darken-4">
+      <buton className="waves-effect waves-light btn" onClick={handleSaveClick}>
+        Salvar
+      </buton>
+      <button
+        className="waves-effect waves-light btn red darken-4"
+        onClick={handleCancelClick}
+      >
         Cancelar
       </button>
     </div>

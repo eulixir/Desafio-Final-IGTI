@@ -75,5 +75,16 @@ body {
 }
 
 .btn {
-  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.browser-default {
+  margin-bottom: 40px;
+}
+
+.icon {
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
 }
