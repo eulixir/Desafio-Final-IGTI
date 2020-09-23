@@ -64,3 +64,16 @@ body {
 .inputTypeText {
   font-family: JetBrains Mono;
 }
+
+.selectMargin {
+  margin-bottom: 40px;
+  justify-content: space-between;
+}
+
+.selectReceita {
+  margin-left: 20px;
+}
+
+.btn {
+  margin-left: 20px;
+}

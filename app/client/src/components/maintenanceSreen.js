@@ -1,4 +1,5 @@
 import React from 'react';
+import '../index.css';
 
 export default function MaintenanceSreen({ transaction }) {
   const [description, setDescription] = React.useState('');
@@ -47,30 +48,32 @@ export default function MaintenanceSreen({ transaction }) {
 
   return (
     <div>
-      <span>
-        <label>
-          <input
-            name="expense_earning"
-            type="radio"
-            checked={type === '-'}
-            onChange={handleTypeChange}
-            value="-"
-          />
-          <span>Despesa</span>
-        </label>
-      </span>
-      <span>
-        <label>
-          <input
-            name="expense_earning"
-            type="radio"
-            checked={type === '+'}
-            onChange={handleTypeChange}
-            value="+"
-          />
-          <span>Receita</span>
-        </label>
-      </span>
+      <div className="selectMargin">
+        <span>
+          <label>
+            <input
+              name="expense_earning"
+              type="radio"
+              checked={type === '-'}
+              onChange={handleTypeChange}
+              value="-"
+            />
+            <span>Despesa</span>
+          </label>
+        </span>
+        <span className="selectReceita">
+          <label>
+            <input
+              name="expense_earning"
+              type="radio"
+              checked={type === '+'}
+              onChange={handleTypeChange}
+              value="+"
+            />
+            <span>Receita</span>
+          </label>
+        </span>
+      </div>
 
       <div className="input-field">
         <input
@@ -116,9 +119,13 @@ export default function MaintenanceSreen({ transaction }) {
           id="inputDate"
         />
         <label htmlFor="inputDate" className="active">
-          Categoria:
+          Data:
         </label>
       </div>
+      <buton className="waves-effect waves-light btn">Salvar</buton>
+      <button className="waves-effect waves-light btn red darken-4">
+        Cancelar
+      </button>
     </div>
   );
 }
