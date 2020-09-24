@@ -100,11 +100,11 @@ export default function App() {
   };
 
   const handleCancelMaintenance = () => {
+    setNewTransaction(false);
     setSelectedTransaction(null);
   };
 
   const handleSaveMaintenance = (newTransaction) => {
-    console.log(newTransaction);
     const { _id } = newTransaction;
     const editTransaction = {
       ...newTransaction,

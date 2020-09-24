@@ -1,12 +1,26 @@
 import React from 'react';
 import '../index.css';
 
+const INSERTING = 0;
+const EDITING = 1;
+
+function today() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  const today = `${year}-${month}-${day}`;
+  return today;
+}
+
 export default function MaintenanceSreen({ transaction, onCancel, onSave }) {
   const [description, setDescription] = React.useState('');
   const [value, setValue] = React.useState(0);
   const [category, setCategory] = React.useState('');
-  const [date, setDate] = React.useState('');
+  const [date, setDate] = React.useState(today);
   const [type, setType] = React.useState('-');
+  const [mode, setMode] = React.useState(INSERTING);
 
   React.useEffect(() => {
     if (!transaction) {
@@ -19,6 +33,7 @@ export default function MaintenanceSreen({ transaction, onCancel, onSave }) {
     setCategory(category);
     setDate(yearMonthDay);
     setType(type);
+    setMode(EDITING);
   }, [transaction]);
 
   const handleDescriptionChange = (event) => {
@@ -138,11 +153,14 @@ export default function MaintenanceSreen({ transaction, onCancel, onSave }) {
           Data:
         </label>
       </div>
-      <buton className="waves-effect waves-light btn" onClick={handleSaveClick}>
-        Salvar
-      </buton>
       <button
-        className="waves-effect waves-light btn red darken-4"
+        className="waves-effect waves-light btn savebtn"
+        onClick={handleSaveClick}
+      >
+        Salvar
+      </button>
+      <button
+        className="waves-effect waves-light btn red darken-4 savebtn"
         onClick={handleCancelClick}
       >
         Cancelar

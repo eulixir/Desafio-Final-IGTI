@@ -88,3 +88,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.savebtn {
+  margin-left: 10px;
+}

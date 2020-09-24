@@ -31,11 +31,12 @@ export default function ListScreen({
         onChange={onFilterChange}
       ></input>
       <div>
-        <button className="waves-effect waves-light btn">
-          Novo Lançamento{' '}
-          <span className="icon" onClick={onNewTransaction}>
-            +
-          </span>
+        <button
+          className="waves-effect waves-light btn"
+          onClick={onNewTransaction}
+        >
+          Novo Lançamento
+          <span className="icon">+</span>
         </button>
       </div>
 
