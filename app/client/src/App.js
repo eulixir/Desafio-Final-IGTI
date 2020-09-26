@@ -104,25 +104,44 @@ export default function App() {
     setSelectedTransaction(null);
   };
 
-  const handleSaveMaintenance = (newTransaction) => {
+  const handleSaveMaintenance = async (newTransaction) => {
+    console.log(newTransaction);
     const { _id } = newTransaction;
-    const editTransaction = {
-      ...newTransaction,
-      year: Number(newTransaction.yearMonthDay.substring(0, 4)),
-      month: Number(newTransaction.yearMonthDay.substring(5, 7)),
-      day: Number(newTransaction.yearMonthDay.substring(8, 10)),
-    };
-    api.put(`${RESOURCE}/${_id}`, editTransaction);
 
-    const newTransactions = [...transactions];
+    if (!_id) {
+      const insertedTransaction = {
+        ...newTransaction,
+        year: Number(newTransaction.yearMonthDay.substring(0, 4)),
+        month: Number(newTransaction.yearMonthDay.substring(5, 7)),
+        day: Number(newTransaction.yearMonthDay.substring(8, 10)),
+      };
 
-    const index = newTransactions.findIndex((transaction) => {
-      return transaction._id === editTransaction._id;
-    });
-    newTransactions[index] = editTransaction;
+      const { data } = await api.post(`${RESOURCE}`, insertedTransaction);
 
-    setTransactions(newTransactions);
-    setSelectedTransaction(null);
+      const newTransactions = [...transactions, data.transaction];
+      newTransactions.sort((a, b) =>
+        a.yearMonthDay.localeCompare(b.yearMonthDay)
+      );
+      setNewTransaction(false);
+    } else {
+      const editTransaction = {
+        ...newTransaction,
+        year: Number(newTransaction.yearMonthDay.substring(0, 4)),
+        month: Number(newTransaction.yearMonthDay.substring(5, 7)),
+        day: Number(newTransaction.yearMonthDay.substring(8, 10)),
+      };
+
+      await api.put(`${RESOURCE}/${_id}`, editTransaction);
+      const newTransactions = [...transactions];
+
+      const index = newTransactions.findIndex((transaction) => {
+        return transaction._id === editTransaction._id;
+      });
+      newTransactions[index] = editTransaction;
+
+      setTransactions(newTransactions);
+      setSelectedTransaction(null);
+    }
   };
 
   const handleDeleteTransaction = async (event) => {

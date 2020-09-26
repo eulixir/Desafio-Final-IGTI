@@ -67,7 +67,7 @@ export default function MaintenanceSreen({ transaction, onCancel, onSave }) {
 
   const handleSaveClick = () => {
     const newTransaction = {
-      _id: transaction._id,
+      _id: !!transaction ? transaction._id : null,
       description,
       value,
       type,
