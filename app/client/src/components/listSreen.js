@@ -63,7 +63,7 @@ export default function ListScreen({
               onClick={onDeleteTransaction}
               id={transaction._id}
             >
-              Apagar
+              X
             </button>
             <span className="list">
               {transaction.yearMonthDay}{' '}
