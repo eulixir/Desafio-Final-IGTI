@@ -41,8 +41,8 @@ export default function ListScreen({
       </div>
 
       {transactions.map((transaction) => {
-        const EARNING_COLOR = '#6ab04c';
-        const EXPENSE_COLOR = '#fa080877';
+        const EARNING_COLOR = '#6017cf';
+        const EXPENSE_COLOR = '#0a3140';
         const currentColor =
           transaction.type === '+' ? EARNING_COLOR : EXPENSE_COLOR;
         return (

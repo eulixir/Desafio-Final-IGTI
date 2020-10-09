@@ -171,9 +171,7 @@ export default function App() {
 
   return (
     <div className="container">
-      <h1 className="title">
-        Desafio Final<br></br> do Bootcamp
-      </h1>
+      <h1 className="title">Controle financeiro</h1>
       {currentScreen === LIST_SCREEN ? (
         <ListScreen
           transactions={filteredTransactions}

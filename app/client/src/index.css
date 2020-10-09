@@ -1,7 +1,7 @@
 .transactionList {
   padding: 5px;
   margin: 5px;
-  border: 1px solid lightgrey;
+  border: 1px solid rgb(39, 39, 39);
   border-radius: 4px;
   color: white;
   cursor: pointer;
@@ -10,17 +10,20 @@
   margin-bottom: 7px;
 }
 .transactionList:hover {
-  box-shadow: 4px 4px rgba(170, 170, 170, 0.432);
   transform: translateY(-3px);
+  transform: translateX(-15px);
 }
 
 body {
-  background-color: rgb(241, 241, 241);
+  background-image: url('https://wallpapershome.com/images/pages/pic_h/16673.jpg');
+  background-repeat: no-repeat;
+  background-color: #151539;
+  background-size: cover;
 }
 
 .title {
   font-family: 'JetBrains Mono';
-  color: rgb(59, 59, 59);
+  color: rgb(255, 255, 255);
   align-items: center;
   justify-content: center;
 }
@@ -28,8 +31,8 @@ body {
 .defaultButton {
   border-radius: 3px;
   cursor: pointer;
-  padding: 5px;
-  font-family: 'JetBrains Mono';
+
+  font-size: 1rem;
   transition: 0.5s;
   border: none;
   color: white;
@@ -38,6 +41,8 @@ body {
 .deleteButton {
   background-color: rgb(233, 16, 16);
   margin-left: 8px;
+  width: 30px;
+  height: 30px;
 }
 
 .list {
@@ -45,8 +50,10 @@ body {
 }
 
 .editButton {
-  background-color: rgb(247, 197, 35);
-  color: black;
+  background-color: rgba(56, 182, 25, 0.884);
+  color: rgb(248, 247, 247);
+  width: 70px;
+  height: 30px;
 }
 
 .defaultButton:hover {
@@ -54,7 +61,7 @@ body {
 }
 
 .editButton:focus {
-  background-color: rgb(247, 197, 35);
+  background-color: rgba(26, 100, 8, 0.884);
 }
 
 .deleteButton:focus {
@@ -91,4 +98,18 @@ body {
 
 .savebtn {
   margin-left: 10px;
+}
+
+/* label color */
+.input-field label {
+  color: rgb(255, 255, 255);
+}
+/* label focus color */
+
+.input-field {
+  color: white;
+}
+
+input {
+  color: white;
 }
